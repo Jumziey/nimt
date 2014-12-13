@@ -8,7 +8,7 @@ sFMean = 6.8;%mean(sFringe(:,2));
 %pksIndex = find(rawPks>sFMean);
 %pks = rawPks(pksIndex);
 
-peakDist = 88.02-87.9; %The smallest peak distance that will be recorded as a peak and not noise
+peakDist = 0.01; %The smallest peak distance that will be recorded as a peak and not noise
 [rawPks,rawLoc] = findpeaks(sFringe(:,2));
 
 
@@ -24,10 +24,11 @@ for i=[1:size(rawPks,1)-1]
 	end
 end
 
-plot(sFringe(:,1),sFringe(:,2))
+plot(sFringe(:,1),sFringe(:,2), '*')
 hold on
-plot(sFringe(loc,1),sFringe(loc,2), 'v')
-xlabel('Voltage Response From Photodiode Circuit')
-ylabel('Time (s)');
+plot(sFringe(:,1),sFringe(:,2), 'g')
+%plot(sFringe(loc,1),sFringe(loc,2), 'vr')
+ylabel('Voltage Response From Photodiode Circuit')
+xlabel('Time (s)');
 
 legend('Response of Fringe Pattern', 'All Detected Peaks')
