@@ -63,21 +63,11 @@ gMids = size(gMid,1);
 gDeltaTemp = gT(end,2)-gT(1,2);
 gAlpha = (gMids/4)*WL/(gL*gDeltaTemp);
 
-disp('silvery: ')
-disp(sprintf('\ttemp: start: %f, end: %f, delta: %f', sT(1,2),sT(end,2),sDeltaTemp))
-disp(sprintf('\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', sMids, sAlpha))
-figure(1)
-plot(sT(:,2),abs(sT1(sST(1):sET(1),2)-sT2(sST(1):sET(1),2)))
-title('Absolute Difference Between Temperature Measure Points At Certain Mean Temperatures')
-xlabel('Mean temperature (c)')
-ylabel('Absolute Difference Between Temperature Measure Points (c)');
+disp('%%silvery: ')
+disp(sprintf('%%\ttemp: start: %f, end: %f, delta: %f', sT(1,2),sT(end,2),sDeltaTemp))
+disp(sprintf('%%\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', sMids, sAlpha))
 
+disp('%%goldy: ')
+disp(sprintf('%%\ttemp: start: %f, end: %f, delta: %f', gT(1,2),gT(end,2),gDeltaTemp))
+disp(sprintf('%%\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', gMids, gAlpha))
 
-disp('goldy: ')
-disp(sprintf('\ttemp: start: %f, end: %f, delta: %f', gT(1,2),gT(end,2),gDeltaTemp))
-disp(sprintf('\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', gMids, gAlpha))
-figure(2)
-plot(gT(:,2),abs(gT1(gST(1):gET(1),2)-gT2(gST(1):gET(1),2)))
-title('Absolute Difference Between Temperature Measure Points At Certain Mean Temperatures')
-xlabel('Mean temperature (c)')
-ylabel('Absolute Difference Between Temperature Measure Points (c)');

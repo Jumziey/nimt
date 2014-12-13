@@ -1,11 +1,11 @@
 %Co
 errT1 = 1;
 V = 0.00405;
-Co = sqrt((1/V^2)*errT1^2)
+Co = sqrt((1/V^2)*errT1^2);
 %Cu
 errT1 = 1;
 V = 0.00397;
-Cu = sqrt((1/V^2)*errT1^2)
+Cu = sqrt((1/V^2)*errT1^2);
 
 %figure(1)
 %subplot(1,2,1)
@@ -32,11 +32,14 @@ n = 3918;
 errN = n*0.1;
 errL = 1e-3;
 errGDeltaTemp = 16.5;
-ErrGoldyHeatExpCoeff = sqrt( (WL/(2*gL*gDeltaTemp))^2*errN^2 + (WL*n/(2*gL^2*gDeltaTemp))^2*errL^2+(WL*n/(2*gL*gDeltaTemp^2))^2*errGDeltaTemp^2)
+ErrGoldyHeatExpCoeff = sqrt( (WL/(4*gL*gDeltaTemp))^2*errN^2 + (WL*n/(4*gL^2*gDeltaTemp))^2*errL^2+(WL*n/(4*gL*gDeltaTemp^2))^2*errGDeltaTemp^2);
 
 %Silvery
 n = 5569;
 errN = n*0.1;
 errL = 1e-3;
 errSDeltaTemp = 11.75;
-ErrSilveryHeatExpCoeff = sqrt( (WL/(2*sL*sDeltaTemp))^2*errN^2 + (WL*n/(2*sL^2*sDeltaTemp))^2*errL^2+(WL*n/(2*sL*sDeltaTemp^2))^2*errSDeltaTemp^2)
+ErrSilveryHeatExpCoeff = sqrt( (WL/(4*sL*sDeltaTemp))^2*errN^2 + (WL*n/(4*sL^2*sDeltaTemp))^2*errL^2+(WL*n/(4*sL*sDeltaTemp^2))^2*errSDeltaTemp^2);
+
+disp(sprintf('%%Error for the Silvery Heat Expansion Coefficient = %e', ErrSilveryHeatExpCoeff))
+disp(sprintf('%%Error for the Goldy Heat Expansion Coefficient = %e', ErrGoldyHeatExpCoeff))
