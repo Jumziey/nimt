@@ -1,34 +1,83 @@
-clear all; close all;
-sFringe = load('rawData_silver.lvm');
-sTemp1 = load('tempData(V)_ovre_silver.lvm');
-sTemp2 = load('tempData(V)_undre_silver.lvm');
+%Laser Wavelength
+WL = 632.8e-9;
 
-sFMean = 6.8;%mean(sFringe(:,2));
-%rawPks = findpeaks(sFringe(:,2));
-%pksIndex = find(rawPks>sFMean);
-%pks = rawPks(pksIndex);
+%Silvery
+sL = (400e-3)-(20e-3);
 
-peakDist = 0.01; %The smallest peak distance that will be recorded as a peak and not noise
-[rawPks,rawLoc] = findpeaks(sFringe(:,2));
+sFr = load('silver/rawData.lvm');
+sT1RAW = load('silver/tempData(V)_ovre.lvm');
+sT2RAW = load('silver/tempData(V)_undre.lvm');
+sT1(:,2) = sT1RAW(:,2)*24444.44;
+sT2(:,2) = sT2RAW(:,2)*24689.14;
+sT = [sT1(:,1) (sT1(:,2)+sT2(:,2))./2];
+%68
+%458
+
+sST = find(sT(:,1)>30);
+sET = find(sT(:,1)>492);
+sSF = find(sFr(:,1)>30);
+sEF = find(sFr(:,1)>492);
+
+sFr = sFr(sSF(1):sEF(1),:);
+sT = sT(sST(1):sET(1),:);
+sT2RAW = sT2RAW(sST(1):sET(1),:);
+sT1RAW = sT1RAW(sST(1):sET(1),:);
+
+[sMidPoints sMiddle] = findpks(sFr);
+sMid = limitmid(sMidPoints,0.02);
+sMids = size(sMid,1);
+sDeltaTemp = sT(end,2)-sT(1,2);
+sAlpha = (sMids/4)*WL/(sL*sDeltaTemp);
 
 
-%Removing every peak that is below a certain value
-AMInd = find(rawPks>sFMean);
-rawPks = rawPks(AMInd);
-rawLoc = rawLoc(AMInd);
-j=0;
-for i=[1:size(rawPks,1)-1]
-	if(abs(sFringe(rawLoc(i),1)-sFringe(rawLoc(i+1),1))>peakDist)
-		j=j+1;
-		loc(j) = rawLoc(i);
-	end
-end
 
-plot(sFringe(:,1),sFringe(:,2), '*')
-hold on
-plot(sFringe(:,1),sFringe(:,2), 'g')
-%plot(sFringe(loc,1),sFringe(loc,2), 'vr')
-ylabel('Voltage Response From Photodiode Circuit')
-xlabel('Time (s)');
 
-legend('Response of Fringe Pattern', 'All Detected Peaks')
+sT1(sET(1),2);
+sT2(sET(1),2);
+
+%Goldy
+gL = (279.5e-3)-(20e-3);
+
+gFr = load('gold/rawData.lvm');
+gT1RAW = load('gold/tempData(V)_ovre.lvm');
+gT2RAW = load('gold/tempData(V)_undre.lvm');
+gT1(:,2) = gT1RAW(:,2)*24444.44;
+gT2(:,2) = gT2RAW(:,2)*24689.14;
+gT = [gT1(:,1) (gT1(:,2)+gT2(:,2))./2];
+%30
+%492
+
+gST = find(gT(:,1)>30);
+gET = find(gT(:,1)>492);
+gSF = find(gFr(:,1)>30);
+gEF = find(gFr(:,1)>492);
+
+gFr = gFr(gSF(1):gEF(1),:);
+gT = gT(gST(1):gET(1),:);
+gT2RAW = gT2RAW(gST(1):gET(1),:);
+gT1RAW = gT1RAW(sST(1):gET(1),:);
+
+[gMidPoints gMiddle] = findpks(gFr);
+gMid = limitmid(gMidPoints,0.02);
+gMids = size(gMid,1);
+gDeltaTemp = gT(end,2)-gT(1,2);
+gAlpha = (gMids/4)*WL/(gL*gDeltaTemp);
+
+disp('silvery: ')
+disp(sprintf('\ttemp: start: %f, end: %f, delta: %f', sT(1,2),sT(end,2),sDeltaTemp))
+disp(sprintf('\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', sMids, sAlpha))
+figure(1)
+plot(sT(:,2),abs(sT1(sST(1):sET(1),2)-sT2(sST(1):sET(1),2)))
+title('Absolute Difference Between Temperature Measure Points At Certain Mean Temperatures')
+xlabel('Mean temperature (c)')
+ylabel('Absolute Difference Between Temperature Measure Points (c)');
+
+
+disp('goldy: ')
+disp(sprintf('\ttemp: start: %f, end: %f, delta: %f', gT(1,2),gT(end,2),gDeltaTemp))
+disp(sprintf('\tmidcrossings: %d, (assuming double pattern) Heat Exp Coeff: %e', gMids, gAlpha))
+figure(2)
+plot(gT(:,2),abs(gT1(gST(1):gET(1),2)-gT2(gST(1):gET(1),2)))
+title('Absolute Difference Between Temperature Measure Points At Certain Mean Temperatures')
+xlabel('Mean temperature (c)')
+ylabel('Absolute Difference Between Temperature Measure Points (c)');
