@@ -25,5 +25,7 @@ plot(nCal(:,1), nCal(:,2), 'r*')
 ylabel('Output Voltage')
 xlabel('Displacement')
 
-[p,S,mu] = polyfit(nCal(:,1),nCal(:,2),1)
-[y, delta] = polyval(p,nCal(:,1),S,mu)
+[p,s] = polyfit(nCal(:,1),nCal(:,2),1);
+ste = sqrt(diag(inv(s.R)*inv(s.R')).*s.normr.^2./s.df);
+p
+ste
