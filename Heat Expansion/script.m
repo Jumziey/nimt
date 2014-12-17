@@ -1,22 +1,22 @@
+clear all; close all;
 %Laser Wavelength
 WL = 632.8e-9;
 
 %Silvery
 sL = (400e-3)-(20e-3);
-
 sFr = load('silver/rawData.lvm');
 sT1RAW = load('silver/tempData(V)_ovre.lvm');
 sT2RAW = load('silver/tempData(V)_undre.lvm');
-sT1(:,2) = sT1RAW(:,2)*24444.44;
-sT2(:,2) = sT2RAW(:,2)*24689.14;
+sT1 = [sT1RAW(:,1) sT1RAW(:,2)*24444.44];
+sT2 = [sT1RAW(:,1) sT2RAW(:,2)*24689.14];
 sT = [sT1(:,1) (sT1(:,2)+sT2(:,2))./2];
 %68
 %458
 
-sST = find(sT(:,1)>30);
-sET = find(sT(:,1)>492);
-sSF = find(sFr(:,1)>30);
-sEF = find(sFr(:,1)>492);
+sST = find(sT(:,1)>68);
+sET = find(sT(:,1)>458);
+sSF = find(sFr(:,1)>68);
+sEF = find(sFr(:,1)>458);
 
 sFr = sFr(sSF(1):sEF(1),:);
 sT = sT(sST(1):sET(1),:);
@@ -41,8 +41,8 @@ gL = (279.5e-3)-(20e-3);
 gFr = load('gold/rawData.lvm');
 gT1RAW = load('gold/tempData(V)_ovre.lvm');
 gT2RAW = load('gold/tempData(V)_undre.lvm');
-gT1(:,2) = gT1RAW(:,2)*24444.44;
-gT2(:,2) = gT2RAW(:,2)*24689.14;
+gT1 = [gT1RAW(:,1) gT1RAW(:,2)*24444.44];
+gT2 = [gT1RAW(:,1) gT2RAW(:,2)*24689.14];
 gT = [gT1(:,1) (gT1(:,2)+gT2(:,2))./2];
 %30
 %492

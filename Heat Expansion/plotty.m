@@ -11,6 +11,7 @@ plot(sFringe(:,1),sFringe(:,2), 'g')
 hold on
 plot(sFringe(:,1),sFringe(:,2), '*')
 plot(sFringe(:,1),middle(:,2), 'r')
-xlabel('Time (s)')
-ylabel('Photodiode Response (V)')
+xlabel('Time (s)', 'fontSize', 22)
+ylabel('Large Photodiode Response (V)', 'fontSize', 22)
+legend('Connecting Measured Values', 'Measured Values', 'Mean Value Line')
 
