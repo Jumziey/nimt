@@ -1,4 +1,6 @@
 clear all; close all;
+set(0, 'defaultTextInterpreter', 'latex');
+fs = 20;
 
 cal = load('cal.lvm');
 
@@ -22,8 +24,8 @@ for i = 2:size(values,2)
 end
 
 plot(nCal(:,2), nCal(:,1), 'r*')
-xlabel('Output Voltage')
-ylabel('Displacement')
+g = xlabel('Output Voltage (v)', 'FontSize', fs)
+ylabel('Displacement (m)', 'FontSize', fs)
 
 %[p,s] = polyfit(nCal(:,1),nCal(:,2),1);
 %ste = sqrt(diag(inv(s.R)*inv(s.R')).*s.normr.^2./s.df);
