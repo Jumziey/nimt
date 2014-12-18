@@ -9,11 +9,15 @@ vDiff = abs(freq(2,:)-freq(3,:));
 
 subplot(3,1,1)
 plot(freq(1,:),vDiff)
+hold on
+plot(freq(1,:),vDiff, '*')
 ylabel('Voltage Diff (V)')
 xlabel('Frequency (kHz)')
 title('Voltage Difference Between no Crack and Visible Crack (steel)')
 subplot(3,1,2)
 plot(freq(1,:),freq(4,:))
+hold on;
+plot(freq(1,:),freq(4,:), '*')
 ylabel('Voltage (V)')
 xlabel('Frequency (kHz)')
 title('Voltage without having probe close to conductive material')
@@ -21,6 +25,8 @@ disp(' ')
 
 subplot(3,1,3)
 plot(freq(1,:),freq(4,:)-freq(2,:))
+hold on;
+plot(freq(1,:),freq(4,:)-freq(2,:), '*')
 ylabel('Voltage Drop (V)')
 xlabel('Frequency (kHz)')
 title('Voltage drop with probe at steel at different frequencies')

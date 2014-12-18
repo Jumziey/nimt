@@ -21,11 +21,14 @@ for i = 2:size(values,2)
 	nCal = [nCal;p];
 end
 
-plot(nCal(:,1), nCal(:,2), 'r*')
-ylabel('Output Voltage')
-xlabel('Displacement')
+plot(nCal(:,2), nCal(:,1), 'r*')
+xlabel('Output Voltage')
+ylabel('Displacement')
 
-[p,s] = polyfit(nCal(:,1),nCal(:,2),1);
-ste = sqrt(diag(inv(s.R)*inv(s.R')).*s.normr.^2./s.df);
-p
-ste
+%[p,s] = polyfit(nCal(:,1),nCal(:,2),1);
+%ste = sqrt(diag(inv(s.R)*inv(s.R')).*s.normr.^2./s.df);
+
+//p = 1.0e+03 *[ 3.763712430721664 -0.000073768836834];
+//Perr = [ 0.378991933865972 0.000010442595997];
+//hold on;
+//plot(nCal(:,1), nCal(:,1)*p(1)+p(2), 'g')
