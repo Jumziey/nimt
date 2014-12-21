@@ -6,11 +6,15 @@ meas = load('meas.lvm');
 %plot(meas(:,1),meas(:,2))
 x0 = meas(8255+25:7.9e4,2);
 t = meas(8255+25:7.9e4,1);
+timediff = t(end)-t(1);
 
 %plot(x0)
 [peakLoc, peakMag] = peakfinder(x0,(max(x0)-min(x0))/16, -0.25, 1);
 [valleyLoc, valleyMag] = peakfinder(x0,(max(x0)-min(x0))/16, -0.25, -1);
 
+freqeuncyOfTuningFork = (length(peakLoc)-1)/timediff
+
+errF = sqrt((1/timediff)^2+((length(peakLoc)-1)/timediff^2)*1/10000^2)
 
 magnitude = peakMag(1:end)-valleyMag(1:end-1);
 %magnitude = peakMag - mean(x0);
@@ -20,6 +24,12 @@ ste = 1.0e-07 * [0.266481354324753;
 p = 1.0e-03 * [0.264638662779562 0.019618899568995];
 displacement = ((magnitude*p(1))/2);
 %displacement = magnitude;
+offset = 182;
+time = t(peakLoc);
+maxMagCalm = max(magnitude(offset:end));
+maxMagCalmTime = time(find(magnitude(offset:end) == max(magnitude(offset:end)), 1, 'first'));
+maxDispCalm = maxMagCalm*p(1)
+maxDispCalmErr = maxMagCalm*ste(1)
 
 offset = 182;
 val = log(displacement);
